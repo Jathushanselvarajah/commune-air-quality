@@ -9,14 +9,17 @@
         placeholder="Rechercher une commune..."
         class="search-input"
       />
+      <i class="fas fa-search search-icon"></i>
     </div>
+
+    <!-- Pagination -->
     <div class="pagination">
       <button
         class="pagination-button"
         :disabled="currentPage === 1"
         @click="currentPage--"
       >
-        Précédent
+        <i class="fas fa-chevron-left"></i> Précédent
       </button>
       <span>Page {{ currentPage }} / {{ totalPages }}</span>
       <button
@@ -24,7 +27,7 @@
         :disabled="currentPage === totalPages"
         @click="currentPage++"
       >
-        Suivant
+        Suivant <i class="fas fa-chevron-right"></i>
       </button>
     </div>
 
@@ -35,9 +38,9 @@
         :key="commune.code"
         class="commune-card"
       >
-        <p>{{ commune.nom }}</p>
+        <p class="commune-name">{{ commune.nom }}</p>
         <button class="info-button" @click="goToDetails(commune.nom)">
-          + d'infos
+          <i class="fas fa-info-circle"></i> Plus d'infos
         </button>
       </div>
     </div>
@@ -49,7 +52,7 @@
         :disabled="currentPage === 1"
         @click="currentPage--"
       >
-        Précédent
+        <i class="fas fa-chevron-left"></i> Précédent
       </button>
       <span>Page {{ currentPage }} / {{ totalPages }}</span>
       <button
@@ -57,7 +60,7 @@
         :disabled="currentPage === totalPages"
         @click="currentPage++"
       >
-        Suivant
+        Suivant <i class="fas fa-chevron-right"></i>
       </button>
     </div>
   </div>
@@ -111,25 +114,38 @@ onMounted(fetchCommunes);
 </script>
 
 <style scoped>
+/* Barre de recherche */
 .search-bar {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-bottom: 20px;
+  position: relative;
 }
 
 .search-input {
   width: 50%;
-  padding: 10px;
+  padding: 10px 15px;
   border-radius: 5px;
   border: 1px solid #ccc;
   font-size: 16px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+.search-icon {
+  position: absolute;
+  right: 26%;
+  color: #007bff;
+  font-size: 18px;
+}
+
+/* Liste des communes */
 .communes-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
   margin-top: 20px;
+  padding: 0 20px;
 }
 
 .commune-card {
@@ -139,11 +155,19 @@ onMounted(fetchCommunes);
   background-color: #f9f9f9;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .commune-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.commune-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .info-button {
@@ -158,10 +182,16 @@ onMounted(fetchCommunes);
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.info-button:hover {
-  background-color: #0056b3;
+.info-button i {
+  margin-right: 5px;
 }
 
+.info-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Pagination */
 .pagination {
   display: flex;
   justify-content: center;
@@ -179,6 +209,10 @@ onMounted(fetchCommunes);
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
+
+.pagination-button i {
+  margin: 0 5px;
 }
 
 .pagination-button:disabled {
